@@ -4,6 +4,7 @@ import os
 from typing import Hashable
 import cv2
 import json
+import sys
 
 
 def create_file_handler(
@@ -112,6 +113,9 @@ class FilePathHander:
         return direct_list, file_path_list
 
     def get_file_names_and_paths(self, direct_path, level_limitation):
+        if not os.path.isdir(direct_path):
+            sys.exit("{} is not a exist direct".format(direct_path))
+
         direct_list = [direct_path]
         file_paths = []
         counter = 0
@@ -370,7 +374,7 @@ class FilePathStructure:
         files_path, directs_path = handler.get_file_names_and_paths(
             direct_path=handler.input_folder_path,
             level_limitation=10)
-            
+
         # remove keywords
         for keyword in handler.path_remoeve_keywords:
             files_path = handler.remove_pathlist_keyword(files_path, keyword)
